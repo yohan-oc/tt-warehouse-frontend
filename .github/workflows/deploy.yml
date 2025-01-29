@@ -1,4 +1,5 @@
-name: Warehouse App
+
+name: Warehouse App - New
 
 on:
   push:
@@ -24,16 +25,12 @@ jobs:
       - name: Build project
         run: npm run build
 
-      - name: Create a Git Tag
-        id: create_tag
-        run: |
-          VERSION=$(date +'%Y%m%d%H%M%S')-$(git rev-parse --short HEAD)  # Tag format like 20250129010101-abc123
-          git tag "$VERSION"
-          git push origin "$VERSION"
-
-      - name: Create a Release and Upload Assets
-        uses: softprops/action-gh-release@v1
+      - name: Deploy to GitHub Pages
+        if: success()
+        uses: peaceiris/actions-gh-pages@v3
         with:
-          files: ./dist/**/*  # Upload all files in the dist folder
-        env:
-          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          personal_token: ${{ secrets.GH_PAT }}
+          publish_branch: gh-pages
+          publish_dir: ./dist
+          user_name: "github-actions[bot]"
+          user_email: "github-actions[bot]@users.noreply.github.com"
