@@ -1,6 +1,7 @@
 const { defineConfig } = require('@vue/cli-service')
 module.exports = defineConfig({
   transpileDependencies: true,
+  publicPath: '/tt-warehouse-frontend/',
   devServer: {
     proxy: {
       '/v1': { // Matches API requests starting with /v1
