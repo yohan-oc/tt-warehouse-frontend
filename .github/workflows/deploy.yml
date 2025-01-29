@@ -24,20 +24,13 @@ jobs:
       - name: Build project
         run: npm run build
 
-      - name: Tag and Push
-        run: |
-          VERSION=$(date +'%Y%m%d%H%M%S')
-          git tag "v$VERSION"
-          git push "https://x-access-token:${{ secrets.GITHUB_TOKEN }}@github.com/${{ github.repository }}" "v$VERSION"
-        env:
-          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-
-      - name: Create a Git Tag
-        id: create_tag
+      - name: Create Git Tag and Push
         run: |
           VERSION=$(date +'%Y%m%d%H%M%S')-$(git rev-parse --short HEAD)  # Tag format like 20250129010101-abc123
           git tag "$VERSION"
           git push origin "$VERSION"
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
 
       - name: Create a Release and Upload Assets
         uses: softprops/action-gh-release@v1
