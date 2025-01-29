@@ -32,6 +32,9 @@ jobs:
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
 
+      - name: Wait for tag to be available
+        run: sleep 10
+
       - name: Create a Release and Upload Assets
         uses: softprops/action-gh-release@v1
         with:
