@@ -37,7 +37,7 @@ jobs:
         run: |
           VERSION=$(date +'%Y%m%d%H%M%S')  # Tag format like 20250129010101
           git tag "v$VERSION"
-          git push origin "v$VERSION"  # Push the tag to GitHub
+          git push https://x-access-token:${{ secrets.GITHUB_TOKEN }}@github.com/${{ github.repository }} "v$VERSION"`
 
       - name: Upload Release Assets
         run: echo "Release assets have been uploaded!"
