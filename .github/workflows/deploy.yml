@@ -29,6 +29,7 @@ jobs:
         run: |
           VERSION=$(date +'%Y%m%d%H%M%S')  # Tag format like 20250129010101
           git tag "v$VERSION"
+          git remote set-url origin https://x-access-token:${{ secrets.GITHUB_TOKEN }}@github.com/${{ github.repository }}
           git push origin "v$VERSION"
 
       - name: Create a Release
