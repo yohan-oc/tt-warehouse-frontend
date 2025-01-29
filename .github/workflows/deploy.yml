@@ -39,15 +39,9 @@ jobs:
           git tag "$VERSION"
           git push origin "$VERSION"
 
-      - name: Upload Release Assets
-        run: echo "Release assets have been uploaded!"
-
-      - name: Deploy to GitHub Pages
-        if: success()
-        uses: peaceiris/actions-gh-pages@v3
+      - name: Create a Release and Upload Assets
+        uses: softprops/action-gh-release@v1
         with:
-          personal_token: ${{ secrets.GH_PAT }}
-          publish_branch: gh-pages
-          publish_dir: ./dist
-          user_name: "github-actions[bot]"
-          user_email: "github-actions[bot]@users.noreply.github.com"
+          files: ./dist/**/*  # Upload all files in the dist folder
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
