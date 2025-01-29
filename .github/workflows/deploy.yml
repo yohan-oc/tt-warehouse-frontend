@@ -24,12 +24,13 @@ jobs:
       - name: Build project
         run: npm run build
 
-      - name: Create a Git Tag
-        id: create_tag
+      - name: Tag and Push
         run: |
-          VERSION=$(date +'%Y%m%d%H%M%S')  # Tag format like 20250129010101
+          VERSION=$(date +'%Y%m%d%H%M%S')
           git tag "v$VERSION"
-          git push https://x-access-token:${{ secrets.GITHUB_TOKEN }}@github.com/${{ github.repository }} "v$VERSION"
+          git push "https://x-access-token:${{ secrets.GITHUB_TOKEN }}@github.com/${{ github.repository }}" "v$VERSION"
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
 
       - name: Create a Release
         id: create_release
